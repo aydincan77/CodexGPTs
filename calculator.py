@@ -1,6 +1,8 @@
-import argparse
+import streamlit as st
+
 
 def calculate(a: float, op: str, b: float) -> float:
+    """Perform a basic arithmetic operation."""
     if op == '+':
         return a + b
     if op == '-':
@@ -13,14 +15,18 @@ def calculate(a: float, op: str, b: float) -> float:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Basit hesap makinesi")
-    parser.add_argument("a", type=float, help="ilk sayi")
-    parser.add_argument("op", choices=['+', '-', '*', '/'], help="islem")
-    parser.add_argument("b", type=float, help="ikinci sayi")
-    args = parser.parse_args()
-    result = calculate(args.a, args.op, args.b)
-    print(result)
+    st.title("Basit Hesap Makinesi")
+    a = st.number_input("İlk sayı", value=0.0)
+    b = st.number_input("İkinci sayı", value=0.0)
+    op = st.selectbox("İşlem", ['+', '-', '*', '/'])
+    if st.button("Hesapla"):
+        try:
+            result = calculate(a, op, b)
+            st.success(f"Sonuç: {result}")
+        except Exception as e:
+            st.error(str(e))
 
 
 if __name__ == "__main__":
     main()
+
